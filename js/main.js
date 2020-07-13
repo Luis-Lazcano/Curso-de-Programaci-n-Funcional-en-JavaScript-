@@ -3,6 +3,29 @@ const compose = (...functions) => data =>
 
 const IS_INVALID = 'is-invalid';
 
+// {
+//  tag: 'h1',
+//  attr: {
+//     class: 'title',
+//  }
+// }
+const attrsToSring = (obj = {}) => {
+  const keys = Object.keys(obj);
+  const attrs = [];
+
+  for (let i=0; i<keys.length;i++) {
+    let attr = keys[i];
+    attrs.push(`${attr}="${obj[attr]}"`);
+  }
+
+  const string = attrs.join()
+  return string;
+}
+// "tag= "h1" class="title""
+
+const tag = t => content => `<${t}>${content}</${t}>`; //<h1>title</h1>
+console.log(tag('h1')('title'))
+
 const description = document.getElementById('description');
 const calories = document.getElementById('calories');
 const carbs = document.getElementById('carbs');
