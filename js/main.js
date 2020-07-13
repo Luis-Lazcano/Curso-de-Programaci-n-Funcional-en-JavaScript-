@@ -9,7 +9,7 @@ const IS_INVALID = 'is-invalid';
 //     class: 'title',
 //  }
 // }
-const attrsToSring = (obj = {}) => {
+const attrsToString = (obj = {}) => {
   const keys = Object.keys(obj);
   const attrs = [];
 
@@ -23,8 +23,23 @@ const attrsToSring = (obj = {}) => {
 }
 // "tag= "h1" class="title""
 
-const tag = t => content => `<${t}>${content}</${t}>`; //<h1>title</h1>
-console.log(tag('h1')('title'))
+
+// {
+//  tag: 'h1',
+//  attr: {
+//     class: 'title',
+//  }
+// }
+const tagAttrs = obj => (content = "") =>
+  `<${obj.tag}${obj.attrs ? ' ' : ''}${attrsToString(obj.attrs)}>${content}</${obj.tag}>`
+
+const tag = t => {
+  if ( typeof t === string) {
+    tagAttrs({tag: t})
+  } else {
+    tagAttrs(t);
+  }
+}
 
 const description = document.getElementById('description');
 const calories = document.getElementById('calories');
