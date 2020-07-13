@@ -8,6 +8,28 @@ const calories = document.getElementById('calories');
 const carbs = document.getElementById('carbs');
 const proteins = document.getElementById('proteins');
 
+let list = [];
+
+const add = () => {
+  const newItem={
+    description: description.value,
+    calories: parseInt(calories.value),
+    carbs: parseInt(carbs.value),
+    proteins: parseInt(proteins.value),
+  }
+
+  list.push(newItem);
+  console.log(list);
+  cleanInputs();
+}
+
+const cleanInputs = () => {
+  description.value='';
+  calories.value='';
+  carbs.value = '';
+  proteins.value = '';
+}
+
 const validateInputs = () => {
   description.value ? '' : description.classList.add(IS_INVALID);
   calories.value ? '' : calories.classList.add(IS_INVALID);
@@ -15,9 +37,8 @@ const validateInputs = () => {
   proteins.value ? '' : proteins.classList.add(IS_INVALID);
 
   if(description.value && calories.value && carbs.value && proteins.value){
-    console.log('OK')
+    add()
   }
-
 }
 
 description.addEventListener('keydown', () => {
