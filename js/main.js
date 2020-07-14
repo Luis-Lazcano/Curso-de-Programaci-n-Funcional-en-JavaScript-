@@ -30,7 +30,7 @@ const attrsToString = (obj = {}) => {
 //     class: 'title',
 //  }
 // }
-const tagAttrs = obj => (content = "") =>
+const tagAttrs = obj => (content = '') =>
   `<${obj.tag}${obj.attrs ? ' ' : ''}${attrsToString(obj.attrs)}>${content}</${obj.tag}>`
 
 const tag = t => {
@@ -40,6 +40,14 @@ const tag = t => {
     tagAttrs(t);
   }
 }
+
+const tableRowTag = tag('tr');
+const tableRow = items => tableRowTag(tableCells(items));
+const tableRow = items => compose(tableRowTag, tableCells)(items);
+
+const tabeCell = tag('td');
+const tableCells = items => item.map(tableCell).join('');
+
 
 const description = document.getElementById('description');
 const calories = document.getElementById('calories');
