@@ -34,7 +34,7 @@ const tagAttrs = obj => (content = '') =>
   `<${obj.tag}${obj.attrs ? ' ' : ''}${attrsToString(obj.attrs)}>${content}</${obj.tag}>`
 
 const tag = t => {
-  if ( typeof t === string) {
+  if ( typeof t === 'string') {
     tagAttrs({tag: t})
   } else {
     tagAttrs(t);
@@ -42,7 +42,7 @@ const tag = t => {
 }
 
 const tableRowTag = tag('tr');
-const tableRow = items => tableRowTag(tableCells(items));
+// const tableRow = items => tableRowTag(tableCells(items));
 const tableRow = items => compose(tableRowTag, tableCells)(items);
 
 const tabeCell = tag('td');
@@ -67,7 +67,21 @@ const add = () => {
   list.push(newItem);
   console.log(list);
   cleanInputs();
+  updateTotals()
 }
+
+const updateTotals = () => {
+  let calories = 0, carbs = 0, proteins=0;
+  list.map(item => {
+    calories += item.calories,
+    carbs += item.carbs,
+    proteins += item.proteins
+  });
+
+  document.getElementById('totalCalories').textContent =  calories;
+  document.getElementById('totalCarbs').textContent = carbs;
+  document.getElementById('totalProteins').textContent = proteins;
+};
 
 const cleanInputs = () => {
   description.value='';
