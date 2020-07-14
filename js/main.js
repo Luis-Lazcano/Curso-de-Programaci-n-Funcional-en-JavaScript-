@@ -48,6 +48,9 @@ const tableCell = tag('td');
 const tableCells = items => items.map(tableCell).join('');
 
 
+
+const trashIcon = tag({tag: 'i', attrs: {class: 'fas fa-trash-alt'}})('')
+
 const description = document.getElementById('description');
 const calories = document.getElementById('calories');
 const carbs = document.getElementById('carbs');
@@ -94,13 +97,21 @@ const renderItems = () => {
 
   document.querySelector('tbody').innerHTML = ''
 
-  list.map(item => {
+  list.map((item, index) => {
+    const removeButton = tag({
+      tag:'button',
+      attrs:{
+        class: 'btn btn-outline-danger',
+        onclick: `removeItem(${index})`
+      }
+    })(trashIcon)
     const row = document.createElement('tr')
     row.innerHTML = tableRow ([
       item.description,
       item.calories,
       item.carbs,
-      item.proteins
+      item.proteins,
+      removeButton,
     ])
 
     document.querySelector('tbody').appendChild( row )
@@ -130,3 +141,9 @@ carbs.addEventListener('keydown', () => {
 proteins.addEventListener('keydown', () => {
   proteins.classList.remove(IS_INVALID);
 });
+
+const removeItem = ( index) => {
+  list.splice(index,1);
+  updateTotals();
+  renderItems();
+}
