@@ -18,7 +18,7 @@ const attrsToString = (obj = {}) => {
     attrs.push(`${attr}="${obj[attr]}"`);
   }
 
-  const string = attrs.join()
+  const string = attrs.join(' ');
   return string;
 }
 // "tag= "h1" class="title""
@@ -35,18 +35,17 @@ const tagAttrs = obj => (content = '') =>
 
 const tag = t => {
   if ( typeof t === 'string') {
-    tagAttrs({tag: t})
-  } else {
-    tagAttrs(t);
+    return tagAttrs({tag: t})
   }
+  return tagAttrs(t);
 }
 
 const tableRowTag = tag('tr');
 // const tableRow = items => tableRowTag(tableCells(items));
 const tableRow = items => compose(tableRowTag, tableCells)(items);
 
-const tabeCell = tag('td');
-const tableCells = items => item.map(tableCell).join('');
+const tableCell = tag('td');
+const tableCells = items => items.map(tableCell).join('');
 
 
 const description = document.getElementById('description');
@@ -67,7 +66,8 @@ const add = () => {
   list.push(newItem);
   console.log(list);
   cleanInputs();
-  updateTotals()
+  updateTotals();
+  renderItems();
 }
 
 const updateTotals = () => {
@@ -88,6 +88,23 @@ const cleanInputs = () => {
   calories.value='';
   carbs.value = '';
   proteins.value = '';
+}
+
+const renderItems = () => {
+
+  document.querySelector('tbody').innerHTML = ''
+
+  list.map(item => {
+    const row = document.createElement('tr')
+    row.innerHTML = tableRow ([
+      item.description,
+      item.calories,
+      item.carbs,
+      item.proteins
+    ])
+
+    document.querySelector('tbody').appendChild( row )
+  })
 }
 
 const validateInputs = () => {
